@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вайб-кодинг: Программирование на естественном языке</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a1b2f 0%, #313456 100%);
+            color: #e0e7ff;
+        }
+
+        .slide {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(145deg, #1d2037 0%, #232741 100%);
+        }
+
+        .slide.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .progress-fill {
+            transition: width 0.6s ease;
+        }
+
+        .tooltip {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .tooltip-text {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translate(-50%, -10px);
+            padding: 8px 12px;
+            background: #4f46e5;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center py-8 px-4">
+    <!-- Прогресс-бар -->
+    <div class="w-full max-w-4xl mb-6 bg-gray-700 rounded-full h-2.5">
+        <div id="progress" class="progress-fill bg-indigo-600 h-2.5 rounded-full" style="width: 12.5%"></div>
+    </div>
+
+    <!-- Контейнер слайдов -->
+    <div class="w-full max-w-4xl">
+        <!-- Слайд 0: Вступление -->
+        <div id="slide0" class="slide relative rounded-2xl p-8 md:p-12 active">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 1
+            </div>
+            <div class="flex flex-col items-center text-center">
+                <h1
+                    class="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent">
+                    Вайб-кодинг: <br>Программирование на естественном языке
+                </h1>
+                <div class="max-w-xl">
+                    <p class="text-xl text-indigo-200 mb-4">ИИ вместо синтаксиса: как сделать программирование доступным
+                        для всех?</p>
+                    <div class="bg-gray-800 p-6 rounded-xl mt-8 text-left">
+                        <p class="mb-4"><span class="font-bold">❓</span> Кто из вас хотел написать
+                            программу, но не знал, с чего начать?</p>
+                        <p><span class="font-bold">✨ Тезис:</span> "Вайб-кодинг — это подход, где вы пишете задачу
+                            обычным языком, а ИИ превращает её в работающий код."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 text-center animate-pulse">
+                <p class="text-indigo-300">Используйте кнопки <span class="px-2 py-1 mx-1 bg-gray-700 rounded">◀</span>
+                    и <span class="px-2 py-1 mx-1 bg-gray-700 rounded">▶</span> для навигации по презентации</p>
+            </div>
+        </div>
+
+        <!-- Слайд 1: Что такое вайб-кодинг -->
+        <div id="slide1" class="slide relative rounded-2xl p-8 md:p-12 hidden">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 2
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Что такое <span
+                    class="text-indigo-400">вайб-кодинг</span>?</h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-blue-400 mb-3 flex items-center"><i
+                            class="fas fa-info-circle mr-3"></i> Определение</h3>
+                    <p class="text-lg">Программирование с помощью естественного языка (разговорной речи) вместо
+                        традиционных языков программирования.</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-purple-400 mb-3 flex items-center"><i class="fas fa-cog mr-3"></i>
+                        Пример</h3>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <p class="font-mono text-sm text-green-300">"Создай веб-страницу с надписью 'Привет!' и кнопкой,
+                            которая меняет текст на 'Ура! Работает!'"</p>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 bg-indigo-900/30 rounded-xl p-6 mt-4 border-l-4 border-indigo-400">
+                    <h3 class="text-xl font-bold text-yellow-300 mb-3 flex items-center"><i
+                            class="fas fa-chart-line mr-3"></i> Интересный факт</h3>
+                    <p><span class="font-bold">Business Insider, февраль 2025:</span> Вайб-кодинг активно
+                        распространяется в Кремниевой долине как подход к быстрой разработке прототипов.</p>
+                </div>
+
+                <div class="md:col-span-2">
+                    <h3 class="text-xl font-bold text-blue-400 mb-4 mt-6 flex items-center"><i
+                            class="fas fa-tools mr-3"></i> Популярные инструменты</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <div class="bg-gray-700 hover:bg-gray-600 transition rounded-lg px-5 py-3 flex items-center">
+                            <a href="https://enzostvs-deepsite.hf.space/" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-android text-green-500 text-xl mr-3"></i>
+                                <span>Deepsite</span>
+                            </a>
+                        </div>
+                        <div class="bg-gray-700 hover:bg-gray-600 transition rounded-lg px-5 py-3 flex items-center">
+                           
+                            <a href="https://giga.chat/"  target="_blank" class="flex items-center text-blue-500 hover:text-blue-700">
+                                <i class="fas fa-cursor text-blue-500 text-xl mr-3"></i>
+                                <span>Gigachat</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 2: Эксперимент -->
+        <div id="slide2" class="slide relative rounded-2xl p-8 md:p-12 hidden">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 3
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Эксперимент: <span class="text-indigo-400">ваш
+                    путь к вайб-кодингу</span></h2>
+
+                    <div class="relative">
+                        <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                            <!-- Шаг 1 -->
+                            <div class="bg-gray-800/80 p-6 rounded-xl border-b-4 border-blue-500 relative group">
+                                <div
+                                    class="absolute -top-4 -left-4 bg-blue-600 text-white h-10 w-10 rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition">
+                                    1</div>
+                                <h3 class="text-xl font-bold mb-3 flex items-center"><i
+                                        class="fas fa-lightbulb text-yellow-400 mr-3"></i> Идея</h3>
+                                <p>Начните с простой идеи, например: "Приветственная страница с меняющимся текстом"</p>
+                            </div>
+                    
+                            <!-- Шаг 2 -->
+                            <div class="bg-gray-800/80 p-6 rounded-xl border-b-4 border-purple-500 relative group">
+                                <div
+                                    class="absolute -top-4 -left-4 bg-purple-600 text-white h-10 w-10 rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition">
+                                    2</div>
+                                <h3 class="text-xl font-bold mb-3 flex items-center"><i
+                                        class="fas fa-keyboard text-blue-400 mr-3"></i> Формулировка</h3>
+                                <p>Опишите задачу естественным языком: максимально просто и ясно</p>
+                            </div>
+                    
+                            <!-- Шаг 3 -->
+                            <div class="bg-gray-800/80 p-6 rounded-xl border-b-4 border-green-500 relative group">
+                                <div
+                                    class="absolute -top-4 -left-4 bg-green-600 text-white h-10 w-10 rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition">
+                                    3</div>
+                                <h3 class="text-xl font-bold mb-3 flex items-center"><i
+                                        class="fas fa-robot text-green-400 mr-3"></i> Ввод запроса</h3>
+                                <p>Введите ваш запрос в выбранный ИИ-инструмент</p>
+                            </div>
+                    
+                            <!-- Шаг 4 -->
+                            <div class="bg-gray-800/80 p-6 rounded-xl border-b-4 border-yellow-500 relative group col-span-1 md:col-span-3 h-full">
+                                <div
+                                    class="absolute -top-4 -left-4 bg-yellow-600 text-white h-10 w-10 rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition">
+                                    4</div>
+                                <h3 class="text-xl font-bold mb-3 flex items-center"><i
+                                        class="fas fa-code text-purple-400 mr-3"></i> Тестирование кода</h3>
+                                <p>Скопируйте сгенерированный код и проверьте его работу</p>
+                            </div>
+                    
+                            <!-- Шаг 6 -->
+                            <div class="bg-gray-800/80 p-6 rounded-xl border-b-4 border-indigo-500 relative group col-span-1 md:col-span-3 h-full">
+                                <div
+                                    class="absolute -top-4 -left-4 bg-indigo-600 text-white h-10 w-10 rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition">
+                                    6</div>
+                                <h3 class="text-xl font-bold mb-3 flex items-center"><i
+                                        class="fas fa-search text-green-400 mr-3"></i> Анализ</h3>
+                                <p>Изучите, как разные формулировки влияют на результат</p>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+        <!-- Слайд 3: Примеры задач -->
+        <div id="slide3" class="slide relative rounded-2xl p-8 md:p-12 hidden">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 4
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Практическое применение <span
+                    class="text-indigo-400">вайб-кодинга</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Карточка 1 -->
+                <div class="bg-gradient-to-br from-blue-900/40 to-blue-800/30 rounded-xl p-6 border border-blue-700/50">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-globe text-blue-400 mr-3 text-2xl"></i>
+                        Веб-приложения
+                    </h3>
+                    <ul class="space-y-2 pl-6">
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-blue-400 mr-2 text-sm"></i>
+                            Лендинг-страницы</li>
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-blue-400 mr-2 text-sm"></i>
+                            MVP для стартапов</li>
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-blue-400 mr-2 text-sm"></i>
+                            Простые формы и интерфейсы</li>
+                    </ul>
+                </div>
+
+                <!-- Карточка 2 -->
+                <div
+                    class="bg-gradient-to-br from-purple-900/40 to-purple-800/30 rounded-xl p-6 border border-purple-700/50">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-comments text-purple-400 mr-3 text-2xl"></i>
+                        Чат-боты
+                    </h3>
+                    <ul class="space-y-2 pl-6">
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-purple-400 mr-2 text-sm"></i>
+                            Боты для поддержки клиентов</li>
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-purple-400 mr-2 text-sm"></i>
+                            Персональные ассистенты</li>
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-purple-400 mr-2 text-sm"></i>
+                            Консультационные системы</li>
+                    </ul>
+                </div>
+
+                <!-- Карточка 3 -->
+                <div
+                    class="bg-gradient-to-br from-green-900/40 to-green-800/30 rounded-xl p-6 border border-green-700/50">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-exchange-alt text-green-400 mr-3 text-2xl"></i>
+                        Интеграции с API
+                    </h3>
+                    <ul class="space-y-2 pl-6">
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-green-400 mr-2 text-sm"></i>
+                            Работа с курсами валют</li>
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-green-400 mr-2 text-sm"></i>
+                            Интеграция с погодными сервисами</li>
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-green-400 mr-2 text-sm"></i>
+                            Работа с платежными системами</li>
+                    </ul>
+                </div>
+
+                <!-- Карточка 4 -->
+                <div
+                    class="bg-gradient-to-br from-yellow-900/40 to-yellow-800/30 rounded-xl p-6 border border-yellow-700/50">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-cogs text-yellow-400 mr-3 text-2xl"></i>
+                        Автоматизация задач
+                    </h3>
+                    <ul class="space-y-2 pl-6">
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-yellow-400 mr-2 text-sm"></i>
+                            Сбор данных (парсинг)</li>
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-yellow-400 mr-2 text-sm"></i>
+                            Генерация отчетов</li>
+                        <li class="flex items-center"><i class="fas fa-chevron-right text-yellow-400 mr-2 text-sm"></i>
+                            Обработка данных</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 4: Вайб-кодинг в индустрии -->
+        <div id="slide4" class="slide relative rounded-2xl p-8 md:p-12 hidden">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 5
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Вайб-кодинг <span class="text-indigo-400">в
+                    индустрии</span></h2>
+
+            <div class="space-y-8">
+                <!-- Цитата 1 -->
+                <div
+                    class="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 p-6 rounded-xl border-l-4 border-blue-500">
+                    <div class="flex items-start">
+                        <div class="bg-gray-800 p-3 rounded-lg flex-shrink-0">
+                            <i class="fas fa-quote-left text-blue-400 text-3xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold mb-2 text-blue-300">Y Combinator, март 2025</h3>
+                            <p class="text-lg">25% стартапов зимнего набора используют код, сгенерированный ИИ на 95%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Цитата 2 -->
+                <div
+                    class="bg-gradient-to-r from-purple-900/30 to-purple-900/30 p-6 rounded-xl border-l-4 border-purple-500">
+                    <div class="flex items-start">
+                        <div class="bg-gray-800 p-3 rounded-lg flex-shrink-0">
+                            <i class="fas fa-quote-left text-purple-400 text-3xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold mb-2 text-purple-300">Forbes, март 2025</h3>
+                            <p class="text-lg">Быстро — да. Надёжно? Зависит.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Цитата 3 -->
+                <div class="bg-gradient-to-r from-red-900/30 to-red-900/30 p-6 rounded-xl border-l-4 border-red-500">
+                    <div class="flex items-start">
+                        <div class="bg-gray-800 p-3 rounded-lg flex-shrink-0">
+                            <i class="fas fa-quote-left text-red-400 text-3xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold mb-2 text-red-300">Ars Technica</h3>
+                            <p class="text-lg mb-2">"Создание продакшен-кода через вайб-кодинг — рискованно"</p>
+                            <p class="text-sm">— Саймон Уиллисон</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-gray-800 to-gray-800/40 p-6 rounded-xl mt-8">
+                    <h3 class="text-xl font-bold text-indigo-300 mb-4 flex items-center"><i
+                            class="fas fa-exclamation-triangle text-yellow-400 mr-3"></i> Юмористический случай</h3>
+                    <div class="bg-gray-900 p-4 rounded-lg">
+                        <div class="flex">
+                            <i class="fas fa-robot text-gray-400 mt-1 mr-3"></i>
+                            <p class="italic">"Я не могу выполнить вашу работу. Напишите логику сами."</p>
+                        </div>
+                        <div class="mt-2 text-right text-sm text-gray-400">— ироничный ответ ИИ на слишком сложный
+                            запрос</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 5: Плюсы -->
+        <div id="slide5" class="slide relative rounded-2xl p-8 md:p-12 hidden">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 6
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Преимущества <span
+                    class="text-green-400">вайб-кодинга</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Блок 1 -->
+                <div
+                    class="bg-gradient-to-br from-green-900/30 to-green-900/10 p-6 rounded-xl border-b-4 border-green-500">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-bolt text-green-400 mr-3"></i>
+                        Быстрый старт
+                    </h3>
+                    <p class="text-lg">Создание прототипов и MVP в разы быстрее традиционных методов разработки</p>
+                </div>
+
+                <!-- Блок 2 -->
+                <div
+                    class="bg-gradient-to-br from-green-900/30 to-green-900/10 p-6 rounded-xl border-b-4 border-green-500">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-user-friends text-green-400 mr-3"></i>
+                        Доступ для неспециалистов
+                    </h3>
+                    <p class="text-lg">Программирование становится доступным для всех, у кого есть идеи и минимальные
+                        технические знания</p>
+                </div>
+
+                <!-- Блок 3 -->
+                <div
+                    class="bg-gradient-to-br from-green-900/30 to-green-900/10 p-6 rounded-xl border-b-4 border-green-500">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-lightbulb text-green-400 mr-3"></i>
+                        Творческие решения
+                    </h3>
+                    <p class="text-lg">ИИ предлагает нестандартные подходы, которые разработчик мог не учесть</p>
+                </div>
+
+                <!-- Блок 4 -->
+                <div
+                    class="bg-gradient-to-br from-green-900/30 to-green-900/10 p-6 rounded-xl border-b-4 border-green-500">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-coins text-green-400 mr-3"></i>
+                        Экономия ресурсов
+                    </h3>
+                    <p class="text-lg">Снижение затрат на рутинные задачи и начальную разработку</p>
+                </div>
+
+                <!-- Прогресс -->
+                <div class="md:col-span-2 bg-indigo-900/30 p-6 rounded-xl mt-8">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-crystal-ball text-blue-400 mr-3"></i>
+                        Перспективы
+                    </h3>
+                    <p>Через 2–3 года дизайнеры и методисты смогут самостоятельно создавать рабочие утилиты без помощи
+                        разработчиков</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 6: Ограничения -->
+        <div id="slide6" class="slide relative rounded-2xl p-8 md:p-12 hidden">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 7
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Ограничения <span
+                    class="text-red-400">вайб-кодинга</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Блок 1 -->
+                <div class="bg-gradient-to-br from-red-900/20 to-gray-800 p-6 rounded-xl border-l-4 border-red-500">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-question-circle text-red-400 mr-3"></i>
+                        Поверхностное понимание
+                    </h3>
+                    <p>Разработчик может не до конца понимать сгенерированный код, что приводит к проблемам при
+                        поддержке</p>
+                </div>
+
+                <!-- Блок 2 -->
+                <div class="bg-gradient-to-br from-red-900/20 to-gray-800 p-6 rounded-xl border-l-4 border-red-500">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-bug text-red-400 mr-3"></i>
+                        Ошибки и уязвимости
+                    </h3>
+                    <p>ИИ может генерировать код с незаметными багами и потенциальными уязвимостями безопасности</p>
+                </div>
+
+                <!-- Блок 3 -->
+                <div class="bg-gradient-to-br from-red-900/20 to-gray-800 p-6 rounded-xl border-l-4 border-red-500">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-search-minus text-red-400 mr-3"></i>
+                        Проблемы с отладкой
+                    </h3>
+                    <p>Диагностика ошибок в сгенерированном коде может быть сложной и неочевидной</p>
+                </div>
+
+                <!-- Блок 4 -->
+                <div class="bg-gradient-to-br from-red-900/20 to-gray-800 p-6 rounded-xl border-l-4 border-red-500">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-user-shield text-red-400 mr-3"></i>
+                        Необходимость проверки
+                    </h3>
+                    <p>Code review человеком остается необходимым шагом для производства</p>
+                </div>
+
+                <!-- Рекомендации -->
+                <div class="md:col-span-2 bg-gray-800 p-6 rounded-xl mt-8">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-gem text-purple-400 mr-3"></i>
+                        Совет для начинающих
+                    </h3>
+                    <p>Не бойтесь пробовать разные формулировки запросов — это ключ к эффективному вайб-кодингу!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 7: Практические советы -->
+        <div id="slide7" class="slide relative rounded-2xl p-8 md:p-12 hidden">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 8
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center text-indigo-300">Практические <span
+                    class="text-indigo-400">советы</span></h2>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-8">
+                    <!-- Совет 1 -->
+                    <div class="flex items-start">
+                        <div
+                            class="bg-indigo-700 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                            <span class="text-white font-bold">1</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Начинайте с простого</h3>
+                            <p>Попробуйте реализовать базовые задачи, прежде чем браться за сложные проекты</p>
+                        </div>
+                    </div>
+
+                    <!-- Совет 2 -->
+                    <div class="flex items-start">
+                        <div
+                            class="bg-indigo-700 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                            <span class="text-white font-bold">2</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Экспериментируйте с формулировками</h3>
+                            <p>Перефразируйте запросы, если результат не соответствует ожиданиям</p>
+                            <div class="bg-gray-800 mt-3 p-4 rounded-lg border border-gray-700">
+                                <p class="text-sm text-gray-300">Пример: "создай калькулятор" → "разработай интерфейс
+                                    калькулятора с кнопками для сложения, вычитания, умножения и деления"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Совет 3 -->
+                    <div class="flex items-start">
+                        <div
+                            class="bg-indigo-700 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                            <span class="text-white font-bold">3</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Обязательно тестируйте</h3>
+                            <p>Проверяйте код в различных сценариях использования перед его публикацией</p>
+                        </div>
+                    </div>
+
+                    <!-- Совет 4 -->
+                    <div class="flex items-start">
+                        <div
+                            class="bg-indigo-700 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                            <span class="text-white font-bold">4</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Комбинируйте подходы</h3>
+                            <p>Используйте вайб-кодинг для прототипирования и быстрой разработки, а традиционное
+                                программирование — для доработки и поддержки</p>
+                        </div>
+                    </div>
+
+                    <!-- Забавные случаи -->
+                    <div class="bg-gray-800/50 rounded-xl p-6 mt-10">
+                        <h3 class="text-xl font-bold mb-4 text-yellow-300 flex items-center">
+                            <i class="fas fa-face-grin-stars text-yellow-400 mr-3"></i>
+                            Забавные случаи
+                        </h3>
+                        <p><i class="fas fa-arrow-right text-yellow-400 mr-2"></i> Запрос: "Создай сайт для продажи
+                            волшебных палочек" → ИИ создал интернет-магазин с полностью функциональной корзиной, но
+                            забыл добавить кнопки для оформления заказа.</p>
+                        <p class="mt-2"><i class="fas fa-arrow-right text-yellow-400 mr-2"></i> Запрос: "Генерируй
+                            новости обо мне" → ИИ создал новостной портал со статьями о "величайшем разработчике всех
+                            времён".</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 8: Заключение -->
+        <div id="slide8" class="slide relative rounded-2xl p-8 md:p-12 hidden">
+            <div class="absolute top-4 right-4 bg-indigo-900 text-indigo-300 py-1 px-3 rounded-full text-sm">Слайд 9</div>
+            <div class="flex flex-col items-center justify-center h-full">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center text-indigo-300">Заключение</h2>
+        
+                <div class="bg-gray-800/40 p-8 rounded-2xl max-w-xl text-center">
+                    <p class="text-2xl mb-6">Вайб-кодинг — это <span class="text-indigo-400 font-bold">инструмент</span>, а не магия</p>
+        
+                    <div class="space-y-6 text-lg mb-8">
+                        <p class="flex items-center justify-center">
+                            <i class="fas fa-user-cog text-blue-400 mr-3 text-2xl"></i>
+                            Он не заменяет программиста, но усиливает его возможности
+                        </p>
+        
+                        <p class="flex items-center justify-center">
+                            <i class="fas fa-brain text-purple-400 mr-3 text-2xl"></i>
+                            Ключевой навык — умение точно формулировать задачи
+                        </p>
+                    </div>
+        
+                    <div class="bg-gradient-to-r from-indigo-700/60 to-blue-700/60 p-6 rounded-xl">
+                        <p class="text-xl font-bold">Экспериментируйте с вайб-кодингом!</p>
+                        <p class="mt-3">Начните с простого проекта сегодня</p>
+                    </div>
+        
+                    <div class="mt-10 flex justify-center">
+                        <button id="restartBtn"
+                            class="bg-indigo-700 hover:bg-indigo-600 transition px-6 py-3 rounded-lg flex items-center">
+                            <i class="fas fa-redo mr-3"></i> Начать заново
+                        </button>
+                    </div>
+        
+                    <!-- Вставка гифки -->
+                    <div class="mt-8">
+                        <img src="https://media1.tenor.com/m/sAqMHb0yzHgAAAAd/dancing-cat-jump-cat.gif"  alt="Groei IT GIF"
+                            class="w-full rounded-lg shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Навигация -->
+    <div class="flex justify-center mt-8 gap-6">
+        <button id="prevBtn"
+            class="bg-gray-800 hover:bg-gray-700 transition w-14 h-14 rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed"
+            disabled>
+            <i class="fas fa-arrow-left text-white"></i>
+        </button>
+
+        <div class="flex items-center">
+            <span id="currentSlide">1</span>
+            <span class="mx-2">/</span>
+            <span>9</span>
+        </div>
+
+        <button id="nextBtn"
+            class="bg-indigo-700 hover:bg-indigo-600 transition w-14 h-14 rounded-full flex items-center justify-center">
+            <i class="fas fa-arrow-right text-white"></i>
+        </button>
+    </div>
+
+    <script>
+        const slides = [
+            document.getElementById('slide0'),
+            document.getElementById('slide1'),
+            document.getElementById('slide2'),
+            document.getElementById('slide3'),
+            document.getElementById('slide4'),
+            document.getElementById('slide5'),
+            document.getElementById('slide6'),
+            document.getElementById('slide7'),
+            document.getElementById('slide8')
+        ];
+
+        const progressBar = document.getElementById('progress');
+        const currentSlideIndicator = document.getElementById('currentSlide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const restartBtn = document.getElementById('restartBtn');
+
+        let currentSlideIndex = 0;
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            // Скрываем все слайды
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.classList.add('hidden');
+            });
+
+            // Показываем текущий слайд
+            slides[index].classList.remove('hidden');
+            slides[index].classList.add('active');
+
+            // Обновляем прогресс-бар
+            const progressPercentage = ((index + 1) / totalSlides) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            // Обновляем счетчик слайдов
+            currentSlideIndicator.textContent = index + 1;
+
+            // Обновляем состояние кнопок
+            prevBtn.disabled = index === 0;
+
+            if (index === totalSlides - 1) {
+                nextBtn.innerHTML = '<i class="fas fa-check text-white"></i>';
+            } else {
+                nextBtn.innerHTML = '<i class="fas fa-arrow-right text-white"></i>';
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        function restartPresentation() {
+            currentSlideIndex = 0;
+            showSlide(currentSlideIndex);
+        }
+
+        // Инициализация
+        showSlide(currentSlideIndex);
+
+        // Обработчики событий
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        restartBtn.addEventListener('click', restartPresentation);
+
+        // Навигация с клавиатуры
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+
+</html>
